@@ -1,0 +1,19 @@
+{
+  "name": "apex---project-manager",
+  "version": "1.0.0",
+  "description": "Project Management Application",
+  "keywords": [
+    "backend",
+    "API"
+  ],
+  "license": "ISC",
+  "author": "Abhishek",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "prettier": "3.7.4"
+  }
+}
