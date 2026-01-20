@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors"
 import healthcheckRoutes from "./routes/healthcheck.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express()
 //basic config
@@ -22,6 +23,7 @@ app.get('/payment', (req, res) => {
 })
 
 //import the routes
-app.use("/api/healthcheck", healthcheckRoutes)
+app.use("/api/v1/healthcheck", healthcheckRoutes)
+app.use("/api/v1/auth", authRoutes)
 
 export default app
