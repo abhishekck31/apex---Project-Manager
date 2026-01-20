@@ -1,4 +1,20 @@
 import Mailgen from "mailgen";
+import nodemailer from "nodemailer";
+
+const sendEmail = async (options) => {
+    const mailGenerator = new Mailgen({
+        theme: "default",
+        product: {
+            name: "Apex",
+            link: "https://apex.com"
+        }
+    })
+
+    const emailTextual = mailGenerator.generatePlaintext(options.mailgenContent)
+    const emailHTML = mailGenerator.generate(options.mailgenContent)
+}
+
+
 
 const emailVerificationMailGenContent = (user, verficationURL) => {
     return {
@@ -8,7 +24,7 @@ const emailVerificationMailGenContent = (user, verficationURL) => {
             action: {
                 instructions: "Please click on the button below to verify your email address.",
                 button: {
-                    color: 'rgba(52, 152, 219, 1)',
+                    color: '#3498dbff',
                     text: 'Verify Email Address',
                     link: verficationURL
                 },
@@ -27,7 +43,7 @@ const forgotPasswordMailGenContent = (user, passwordResetURL) => {
             action: {
                 instructions: "Please click on the button below to reset your password.",
                 button: {
-                    color: 'rgba(52, 152, 219, 1)',
+                    color: '#3498dbff',
                     text: 'Reset Password',
                     link: passwordResetURL
                 },
@@ -37,3 +53,8 @@ const forgotPasswordMailGenContent = (user, passwordResetURL) => {
         },
     };
 };
+
+export {
+    emailVerificationMailGenContent,
+    forgotPasswordMailGenContent
+}
