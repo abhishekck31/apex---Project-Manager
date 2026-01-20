@@ -12,6 +12,30 @@ const sendEmail = async (options) => {
 
     const emailTextual = mailGenerator.generatePlaintext(options.mailgenContent)
     const emailHTML = mailGenerator.generate(options.mailgenContent)
+
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: true,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS
+        }
+    })
+
+    const mail = {
+        from: "mail.apex@abhishek.com",
+        to: options.email,
+        subject: options.subject,
+        text: emailTextual,
+        html: emailHTML
+    }
+
+    try {
+        await transporter.sendMail(mail)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
