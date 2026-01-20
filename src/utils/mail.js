@@ -8,7 +8,7 @@ const sendEmail = async (options) => {
             name: "Apex",
             link: "https://apex.com"
         }
-    })
+    });
 
     const emailTextual = mailGenerator.generatePlaintext(options.mailgenContent)
     const emailHTML = mailGenerator.generate(options.mailgenContent)
@@ -34,11 +34,10 @@ const sendEmail = async (options) => {
     try {
         await transporter.sendMail(mail)
     } catch (error) {
-        console.log(error)
+        console.error("Email Service Failed siliently.Make Sure you have provided correct SMTP credentials")
+        console.error("Error : ", error)
     }
-}
-
-
+};
 
 const emailVerificationMailGenContent = (user, verficationURL) => {
     return {
@@ -80,5 +79,6 @@ const forgotPasswordMailGenContent = (user, passwordResetURL) => {
 
 export {
     emailVerificationMailGenContent,
-    forgotPasswordMailGenContent
-}
+    forgotPasswordMailGenContent,
+    sendEmail
+};
