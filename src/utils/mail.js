@@ -13,13 +13,20 @@ const sendEmail = async (options) => {
     const emailTextual = mailGenerator.generatePlaintext(options.mailgenContent)
     const emailHTML = mailGenerator.generate(options.mailgenContent)
 
+    console.log("Sending email with config:", {
+        host: process.env.MAILTRAP_SMTP_HOST,
+        port: process.env.MAILTRAP_SMTP_PORT,
+        user: process.env.MAILTRAP_SMTP_USER,
+        secure: process.env.MAILTRAP_SMTP_PORT == 465,
+    });
+
     const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT,
-        secure: true,
+        host: process.env.MAILTRAP_SMTP_HOST,
+        port: process.env.MAILTRAP_SMTP_PORT,
+        secure: process.env.MAILTRAP_SMTP_PORT == 465, // true for 465, false for other ports
         auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS
+            user: process.env.MAILTRAP_SMTP_USER,
+            pass: process.env.MAILTRAP_SMTP_PASS
         }
     })
 
@@ -39,7 +46,7 @@ const sendEmail = async (options) => {
     }
 };
 
-const emailVerificationMailGenContent = (user, verficationURL) => {
+const emailVerificationMailGenContent = (username, verificationURL) => {
     return {
         body: {
             name: username,
@@ -49,7 +56,7 @@ const emailVerificationMailGenContent = (user, verficationURL) => {
                 button: {
                     color: '#3498dbff',
                     text: 'Verify Email Address',
-                    link: verficationURL
+                    link: verificationURL
                 },
             },
             outro:
@@ -58,7 +65,7 @@ const emailVerificationMailGenContent = (user, verficationURL) => {
     };
 };
 
-const forgotPasswordMailGenContent = (user, passwordResetURL) => {
+const forgotPasswordMailGenContent = (username, passwordResetURL) => {
     return {
         body: {
             name: username,
